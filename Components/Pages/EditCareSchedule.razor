@@ -1,0 +1,69 @@
+@page "/careschedules/edit/{Id:int}"
+@page "/careschedules/new"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == 0 ? "New Care Schedule" : "Edit Care Schedule")</PageTitle>
+
+<h3>@(Id == 0 ? "New Care Schedule" : "Edit Care Schedule")</h3>
+
+@if (careSchedule is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="careSchedule" OnValidSubmit="SaveCareSchedule">
+
+        <div class="mb-3">
+            <label class="form-label">Pet ID</label>
+            <InputNumber class="form-control" @bind-Value="careSchedule.PetId" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Feeding</label>
+            <InputText class="form-control" @bind-Value="careSchedule.Feeding" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Medication</label>
+            <InputText class="form-control" @bind-Value="careSchedule.Medication" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Notes</label>
+            <InputText class="form-control" @bind-Value="careSchedule.Notes" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary ms-2" href="/careschedules">Cancel</a>
+
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private CareSchedule? careSchedule;
+
+    protected override async Task OnInitializedAsync()
+    {
+        careSchedule = Id == 0 ? new CareSchedule() : await Db.CareSchedules.FindAsync(Id);
+    }
+
+    private async Task SaveCareSchedule()
+    {
+        if (Id == 0)
+        {
+            Db.CareSchedules.Add(careSchedule!);
+        }
+
+        await Db.SaveChangesAsync();
+        Navigation.NavigateTo("/careschedules");
+    }
+}
