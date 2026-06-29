@@ -37,3 +37,4 @@ VALUES
 (4, 'Milo', 'Cat', 'Maine Coon', '2022-01-15', 'Male', '321654987', 'Needs daily medication', 4),
 (5, 'Rocky', 'Dog', 'German Shepherd', '2018-09-30', 'Male', '654987321', 'No medical issues', 5),
 (6, 'Nala', 'Cat', 'British Shorthair', '2021-11-05', 'Female', '789123456', 'Sensitive stomach', 6);
+

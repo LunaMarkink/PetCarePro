@@ -1,0 +1,90 @@
+@page "/stays/edit/{Id:int}"
+@page "/stays/new"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == 0 ? "New Stay" : "Edit Stay")</PageTitle>
+
+<h3>@(Id == 0 ? "New Stay" : "Edit Stay")</h3>
+
+@if (stay is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="stay" OnValidSubmit="SaveStay">
+
+        <div class="mb-3">
+            <label class="form-label">Pet ID</label>
+            <InputNumber class="form-control" @bind-Value="stay.PetId" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <InputDate class="form-control" @bind-Value="stay.StartDate" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">End Date</label>
+            <InputDate class="form-control" @bind-Value="stay.EndDate" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Kennel Number</label>
+            <InputText class="form-control" @bind-Value="stay.KennelNumber" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <InputText class="form-control" @bind-Value="stay.Status" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+
+        <a class="btn btn-secondary ms-2" href="/stays">
+            Cancel
+        </a>
+
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Stay? stay;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == 0)
+        {
+            stay = new Stay
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(1)
+            };
+        }
+        else
+        {
+            stay = await Db.Stays.FindAsync(Id);
+        }
+    }
+
+    private async Task SaveStay()
+    {
+        if (Id == 0)
+        {
+            Db.Stays.Add(stay!);
+        }
+
+        await Db.SaveChangesAsync();
+        Navigation.NavigateTo("/stays");
+    }
+}
