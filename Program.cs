@@ -14,11 +14,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Database aanmaken als deze nog niet bestaat
+// Database initialiseren vanuit init.sql
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+
+    var sqlPath = Path.Combine(app.Environment.ContentRootPath, "Data", "init.sql");
+    var sql = File.ReadAllText(sqlPath);
+
+    db.Database.OpenConnection();
+
+    using var command = db.Database.GetDbConnection().CreateCommand();
+    command.CommandText = sql;
+    command.ExecuteNonQuery();
+
+    db.Database.CloseConnection();
 }
 
 // Configure the HTTP request pipeline.
