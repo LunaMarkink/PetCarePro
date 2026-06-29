@@ -14,21 +14,26 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Database initialiseren vanuit init.sql
-using (var scope = app.Services.CreateScope())
+// Database alleen initialiseren als deze nog niet bestaat
+var databasePath = Path.Combine(app.Environment.ContentRootPath, "petcarepro.db");
+
+if (!File.Exists(databasePath))
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    var sqlPath = Path.Combine(app.Environment.ContentRootPath, "Data", "init.sql");
-    var sql = File.ReadAllText(sqlPath);
+        var sqlPath = Path.Combine(app.Environment.ContentRootPath, "Data", "init.sql");
+        var sql = File.ReadAllText(sqlPath);
 
-    db.Database.OpenConnection();
+        db.Database.OpenConnection();
 
-    using var command = db.Database.GetDbConnection().CreateCommand();
-    command.CommandText = sql;
-    command.ExecuteNonQuery();
+        using var command = db.Database.GetDbConnection().CreateCommand();
+        command.CommandText = sql;
+        command.ExecuteNonQuery();
 
-    db.Database.CloseConnection();
+        db.Database.CloseConnection();
+    }
 }
 
 // Configure the HTTP request pipeline.
