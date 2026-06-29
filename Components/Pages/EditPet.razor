@@ -1,0 +1,84 @@
+@page "/pets/edit/{Id:int}"
+@page "/pets/new"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == 0 ? "New Pet" : "Edit Pet")</PageTitle>
+
+<h1>@(Id == 0 ? "New Pet" : "Edit Pet")</h1>
+
+@if (pet is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="pet" OnValidSubmit="SavePet">
+        <div>
+            <label>Name</label>
+            <InputText class="form-control" @bind-Value="pet.Name" />
+        </div>
+
+        <div>
+            <label>Species</label>
+            <InputText class="form-control" @bind-Value="pet.Species" />
+        </div>
+
+        <div>
+            <label>Breed</label>
+            <InputText class="form-control" @bind-Value="pet.Breed" />
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <InputText class="form-control" @bind-Value="pet.Gender" />
+        </div>
+
+        <div>
+            <label>Chip Number</label>
+            <InputText class="form-control" @bind-Value="pet.ChipNumber" />
+        </div>
+
+        <div>
+            <label>Medical History</label>
+            <InputText class="form-control" @bind-Value="pet.MedicalHistory" />
+        </div>
+
+        <div>
+            <label>Client ID</label>
+            <InputNumber class="form-control" @bind-Value="pet.ClientId" />
+        </div>
+
+        <br />
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/pets">Cancel</a>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Pet? pet;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pet = Id == 0 ? new Pet() : await Db.Pets.FindAsync(Id);
+    }
+
+    private async Task SavePet()
+    {
+        if (Id == 0)
+        {
+            Db.Pets.Add(pet!);
+        }
+
+        await Db.SaveChangesAsync();
+        Navigation.NavigateTo("/pets");
+    }
+}
