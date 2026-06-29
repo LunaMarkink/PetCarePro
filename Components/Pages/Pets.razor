@@ -1,0 +1,56 @@
+@page "/pets"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+
+<h3>Pets</h3>
+
+<a href="/pets/new" class="btn btn-success mb-3">Add new pet</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Species</th>
+            <th>Breed</th>
+            <th>Gender</th>
+            <th>Chip Number</th>
+            <th>Client ID</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var pet in pets)
+        {
+            <tr>
+                <td>@pet.PetId</td>
+                <td>@pet.Name</td>
+                <td>@pet.Species</td>
+                <td>@pet.Breed</td>
+                <td>@pet.Gender</td>
+                <td>@pet.ChipNumber</td>
+                <td>@pet.ClientId</td>
+
+                <td>
+                    <a class="btn btn-primary btn-sm"
+                       href="/pets/edit/@pet.PetId">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Pet> pets = new();
+
+    protected override void OnInitialized()
+    {
+        pets = Db.Pets.ToList();
+    }
+}
