@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "kop/FMzSCRs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\marki\\PetCarePro\\PetCarePro\\PetCarePro.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\marki\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.9\\microsoft.aspnetcore.app.internal.assets.10.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
