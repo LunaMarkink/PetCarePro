@@ -1,0 +1,65 @@
+@page "/stays"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+
+<h3>Stays</h3>
+
+<a href="/stays/new" class="btn btn-success mb-3">Add new stay</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pet ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Kennel Number</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var stay in stays)
+        {
+            <tr>
+                <td>@stay.StayId</td>
+                <td>@stay.PetId</td>
+                <td>@stay.StartDate.ToShortDateString()</td>
+                <td>@stay.EndDate.ToShortDateString()</td>
+                <td>@stay.KennelNumber</td>
+                <td>@stay.Status</td>
+                <td>
+                    <a class="btn btn-primary btn-sm"
+                       href="/stays/edit/@stay.StayId">
+                        Edit
+                    </a>
+
+                    <button class="btn btn-danger btn-sm"
+                            @onclick="() => Delete(stay)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Stay> stays = new();
+
+    protected override void OnInitialized()
+    {
+        stays = Db.Stays.ToList();
+    }
+
+    private async Task Delete(Stay stay)
+    {
+        Db.Stays.Remove(stay);
+        await Db.SaveChangesAsync();
+        stays.Remove(stay);
+    }
+}
