@@ -1,4 +1,4 @@
-namespace PetCareProBlazor.Classes
+namespace PetCarePro.Classes
 {
     public class Client
     {

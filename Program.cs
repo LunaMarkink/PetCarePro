@@ -1,4 +1,6 @@
 using PetCarePro.Components;
+using Microsoft.EntityFrameworkCore;
+using PetCarePro.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,15 +8,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Database toevoegen
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=petcarepro.db"));
+
 var app = builder.Build();
+
+// Database aanmaken als deze nog niet bestaat
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
 

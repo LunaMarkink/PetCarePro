@@ -1,6 +1,6 @@
 using System;
 
-namespace PetCareProBlazor.Classes
+namespace PetCarePro.Classes
 {
     // Pet
     public class Pet
