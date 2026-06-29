@@ -10,26 +10,34 @@
 <a href="/clients/new">Add new client</a>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-        </tr>
-    </thead>
+   <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+</thead>
 
     <tbody>
         @foreach (var client in clients)
         {
             <tr>
-                <td>@client.ClientId</td>
-                <td>@client.Name</td>
-                <td>@client.Address</td>
-                <td>@client.PhoneNumber</td>
-                <td>@client.Email</td>
-            </tr>
+    <td>@client.ClientId</td>
+    <td>@client.Name</td>
+    <td>@client.Address</td>
+    <td>@client.PhoneNumber</td>
+    <td>@client.Email</td>
+
+    <td>
+        <a class="btn btn-primary btn-sm"
+           href="/clients/edit/@client.ClientId">
+            Edit
+        </a>
+    </td>
+</tr>
         }
     </tbody>
 </table>
