@@ -1,0 +1,69 @@
+@page "/clients/edit/{Id:int}"
+@page "/clients/new"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == 0 ? "New Client" : "Edit Client")</PageTitle>
+
+<h1>@(Id == 0 ? "New Client" : "Edit Client")</h1>
+
+@if (client is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="client" OnValidSubmit="SaveClient">
+        <div>
+            <label>Name</label>
+            <InputText class="form-control" @bind-Value="client.Name" />
+        </div>
+
+        <div>
+            <label>Address</label>
+            <InputText class="form-control" @bind-Value="client.Address" />
+        </div>
+
+        <div>
+            <label>Phone number</label>
+            <InputText class="form-control" @bind-Value="client.PhoneNumber" />
+        </div>
+
+        <div>
+            <label>Email</label>
+            <InputText class="form-control" @bind-Value="client.Email" />
+        </div>
+
+        <br />
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/clients">Cancel</a>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Client? client;
+
+    protected override async Task OnInitializedAsync()
+    {
+        client = Id == 0 ? new Client() : await Db.Clients.FindAsync(Id);
+    }
+
+    private async Task SaveClient()
+    {
+        if (Id == 0)
+        {
+            Db.Clients.Add(client!);
+        }
+
+        await Db.SaveChangesAsync();
+        Navigation.NavigateTo("/clients");
+    }
+}
