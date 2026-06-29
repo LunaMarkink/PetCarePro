@@ -19,6 +19,16 @@ CREATE TABLE Pets (
     FOREIGN KEY (ClientId) REFERENCES Clients(ClientId)
 );
 
+CREATE TABLE Stays (
+    StayId INTEGER PRIMARY KEY AUTOINCREMENT,
+    PetId INTEGER NOT NULL,
+    StartDate TEXT NOT NULL,
+    EndDate TEXT NOT NULL,
+    KennelNumber TEXT NOT NULL,
+    Status TEXT NOT NULL,
+    FOREIGN KEY (PetId) REFERENCES Pets(PetId)
+);
+
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
 (1, 'Jan Jansen', 'Hoofdstraat 1', '0612345678', 'jan@email.nl'),
@@ -38,3 +48,10 @@ VALUES
 (5, 'Rocky', 'Dog', 'German Shepherd', '2018-09-30', 'Male', '654987321', 'No medical issues', 5),
 (6, 'Nala', 'Cat', 'British Shorthair', '2021-11-05', 'Female', '789123456', 'Sensitive stomach', 6);
 
+
+INSERT INTO Stays
+(StayId, PetId, StartDate, EndDate, KennelNumber, Status)
+VALUES
+(1, 1, '2026-07-01', '2026-07-07', 'A01', 'Reserved'),
+(2, 2, '2026-07-03', '2026-07-10', 'B02', 'Active'),
+(3, 3, '2026-07-12', '2026-07-18', 'A03', 'Completed');
