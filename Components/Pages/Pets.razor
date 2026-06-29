@@ -35,13 +35,19 @@
                 <td>@pet.ChipNumber</td>
                 <td>@pet.ClientId</td>
 
-                <td>
-                    <a class="btn btn-primary btn-sm"
-                       href="/pets/edit/@pet.PetId">
-                        Edit
-                    </a>
-                </td>
-            </tr>
+
+    <td>
+    <a class="btn btn-primary btn-sm"
+       href="/pets/edit/@pet.PetId">
+        Edit
+    </a>
+
+    <button class="btn btn-danger btn-sm"
+            @onclick="() => Delete(pet)">
+        Delete
+    </button>
+    </td>
+    </tr>
         }
     </tbody>
 </table>
@@ -52,5 +58,12 @@
     protected override void OnInitialized()
     {
         pets = Db.Pets.ToList();
+    }
+
+    private async Task Delete(Pet pet)
+    {
+        Db.Pets.Remove(pet);
+        await Db.SaveChangesAsync();
+        pets.Remove(pet);
     }
 }
