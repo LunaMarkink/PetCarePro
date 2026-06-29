@@ -29,6 +29,17 @@ CREATE TABLE Stays (
     FOREIGN KEY (PetId) REFERENCES Pets(PetId)
 );
 
+
+CREATE TABLE CareSchedules (
+    CareScheduleId INTEGER PRIMARY KEY AUTOINCREMENT,
+    PetId INTEGER NOT NULL,
+    Feeding TEXT NOT NULL,
+    Medication TEXT NOT NULL,
+    Notes TEXT NOT NULL,
+    FOREIGN KEY (PetId) REFERENCES Pets(PetId)
+);
+
+
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
 (1, 'Jan Jansen', 'Hoofdstraat 1', '0612345678', 'jan@email.nl'),
@@ -55,3 +66,14 @@ VALUES
 (1, 1, '2026-07-01', '2026-07-07', 'A01', 'Reserved'),
 (2, 2, '2026-07-03', '2026-07-10', 'B02', 'Active'),
 (3, 3, '2026-07-12', '2026-07-18', 'A03', 'Completed');
+
+
+INSERT INTO CareSchedules
+(CareScheduleId, PetId, Feeding, Medication, Notes)
+VALUES
+(1, 1, 'Twice a day', 'None', 'Walk after breakfast'),
+(2, 2, 'Three times a day', 'Allergy medication', 'No chicken food'),
+(3, 3, 'Twice a day', 'Joint supplements', 'Gentle exercise only'),
+(4, 4, 'Once a day', 'Daily medication', 'Keep indoors'),
+(5, 5, 'Twice a day', 'None', 'Enjoys long walks'),
+(6, 6, 'Small portions', 'Stomach medication', 'Sensitive stomach');
