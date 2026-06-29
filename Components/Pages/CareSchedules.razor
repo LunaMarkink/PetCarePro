@@ -1,0 +1,63 @@
+@page "/careschedules"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+
+<h3>Care Schedules</h3>
+
+<a href="/careschedules/new" class="btn btn-success mb-3">Add new care schedule</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pet ID</th>
+            <th>Feeding</th>
+            <th>Medication</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var careSchedule in careSchedules)
+        {
+            <tr>
+                <td>@careSchedule.CareScheduleId</td>
+                <td>@careSchedule.PetId</td>
+                <td>@careSchedule.Feeding</td>
+                <td>@careSchedule.Medication</td>
+                <td>@careSchedule.Notes</td>
+                <td>
+                    <a class="btn btn-primary btn-sm"
+                       href="/careschedules/edit/@careSchedule.CareScheduleId">
+                        Edit
+                    </a>
+
+                    <button class="btn btn-danger btn-sm"
+                            @onclick="() => Delete(careSchedule)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<CareSchedule> careSchedules = new();
+
+    protected override void OnInitialized()
+    {
+        careSchedules = Db.CareSchedules.ToList();
+    }
+
+    private async Task Delete(CareSchedule careSchedule)
+    {
+        Db.CareSchedules.Remove(careSchedule);
+        await Db.SaveChangesAsync();
+        careSchedules.Remove(careSchedule);
+    }
+}
