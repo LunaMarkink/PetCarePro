@@ -47,6 +47,12 @@ CREATE TABLE Users (
     Role TEXT NOT NULL
 );
 
+CREATE TABLE Cages (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL,
+    Size TEXT NOT NULL CHECK (Size IN ('S', 'M', 'L'))
+);
+
 
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
@@ -92,3 +98,11 @@ VALUES
 (1, 'admin', 'admin123', 'Administrator'),
 (2, 'employee1', 'welcome123', 'Employee'),
 (3, 'employee2', 'welcome123', 'Employee');
+
+INSERT INTO Cages (Id, Name, Size)
+VALUES
+(1, 'Large cage', 'L'),
+(2, 'Medium cage', 'M'),
+(3, 'Large cage', 'L');
+(4, 'Small cage', 'S');
+(5, 'Medium cage', 'M');
