@@ -1,48 +1,45 @@
 @page "/"
 
-<PageTitle>PetCarePro</PageTitle>
+@using PetCarePro.Data
+@inject AppDbContext Db
 
-<h1>🐾 Welcome to PetCarePro</h1>
+<PageTitle>PetCarePro Dashboard</PageTitle>
 
-<p>
-    Welcome to the PetCarePro management system.
-</p>
+<h1>🐾 PetCarePro Dashboard</h1>
+
+<p>Welcome to the PetCarePro management system.</p>
 
 <div class="row mt-4">
 
     <div class="col-md-3">
-        <div class="card p-3">
-            <h4>Clients</h4>
-            <a href="/clients" class="btn btn-primary">
-                Manage Clients
-            </a>
+        <div class="card text-center p-3 shadow-sm">
+            <h5>Clients</h5>
+            <h2>@Db.Clients.Count()</h2>
+            <a href="/clients" class="btn btn-primary">View</a>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card p-3">
-            <h4>Pets</h4>
-            <a href="/pets" class="btn btn-primary">
-                Manage Pets
-            </a>
+        <div class="card text-center p-3 shadow-sm">
+            <h5>Pets</h5>
+            <h2>@Db.Pets.Count()</h2>
+            <a href="/pets" class="btn btn-primary">View</a>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card p-3">
-            <h4>Stays</h4>
-            <a href="/stays" class="btn btn-primary">
-                Manage Stays
-            </a>
+        <div class="card text-center p-3 shadow-sm">
+            <h5>Stays</h5>
+            <h2>@Db.Stays.Count()</h2>
+            <a href="/stays" class="btn btn-primary">View</a>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card p-3">
-            <h4>Users</h4>
-            <a href="/users" class="btn btn-primary">
-                Manage Users
-            </a>
+        <div class="card text-center p-3 shadow-sm">
+            <h5>Users</h5>
+            <h2>@Db.Users.Count()</h2>
+            <a href="/users" class="btn btn-primary">View</a>
         </div>
     </div>
 
