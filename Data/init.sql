@@ -40,6 +40,14 @@ CREATE TABLE CareSchedules (
 );
 
 
+CREATE TABLE Users (
+    UserId INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT NOT NULL,
+    Password TEXT NOT NULL,
+    Role TEXT NOT NULL
+);
+
+
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
 (1, 'Jan Jansen', 'Hoofdstraat 1', '0612345678', 'jan@email.nl'),
@@ -77,3 +85,10 @@ VALUES
 (4, 4, 'Once a day', 'Daily medication', 'Keep indoors'),
 (5, 5, 'Twice a day', 'None', 'Enjoys long walks'),
 (6, 6, 'Small portions', 'Stomach medication', 'Sensitive stomach');
+
+
+INSERT INTO Users (UserId, Username, Password, Role)
+VALUES
+(1, 'admin', 'admin123', 'Administrator'),
+(2, 'employee1', 'welcome123', 'Employee'),
+(3, 'employee2', 'welcome123', 'Employee');

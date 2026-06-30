@@ -1,0 +1,61 @@
+@page "/users"
+
+@using PetCarePro.Classes
+@using PetCarePro.Data
+
+@inject AppDbContext Db
+
+<h3>Users</h3>
+
+<a href="/users/new" class="btn btn-success mb-3">Add new user</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.Username</td>
+                <td>@user.Password</td>
+                <td>@user.Role</td>
+                <td>
+                    <a class="btn btn-primary btn-sm"
+                       href="/users/edit/@user.UserId">
+                        Edit
+                    </a>
+
+                    <button class="btn btn-danger btn-sm"
+                            @onclick="() => Delete(user)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<User> users = new();
+
+    protected override void OnInitialized()
+    {
+        users = Db.Users.ToList();
+    }
+
+    private async Task Delete(User user)
+    {
+        Db.Users.Remove(user);
+        await Db.SaveChangesAsync();
+        users.Remove(user);
+    }
+}
