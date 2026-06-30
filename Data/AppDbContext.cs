@@ -15,4 +15,14 @@ public class AppDbContext : DbContext
     public DbSet<Stay> Stays { get; set; }
     public DbSet<CareSchedule> CareSchedules { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Cage> Cages { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Cage>()
+        .Property(c => c.Size)
+        .HasConversion<string>();
+
+    base.OnModelCreating(modelBuilder);
 }
