@@ -53,6 +53,15 @@ CREATE TABLE Cages (
     Size TEXT NOT NULL CHECK (Size IN ('S', 'M', 'L'))
 );
 
+CREATE TABLE Reservations (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    PetId INTEGER NOT NULL,
+    CageId INTEGER NOT NULL,
+    StartDate TEXT NOT NULL,
+    EndDate TEXT NOT NULL,
+    FOREIGN KEY (PetId) REFERENCES Pets(PetId),
+    FOREIGN KEY (CageId) REFERENCES Cages(Id)
+);
 
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
