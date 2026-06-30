@@ -15,7 +15,6 @@
     </div>
 
     <div class="row g-4">
-
         <div class="col-md-3">
             <div class="card text-center shadow-sm h-100 border-primary">
                 <div class="card-body">
@@ -55,28 +54,66 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="mt-5">
         <h3>Quick Actions</h3>
 
         <div class="d-flex gap-3 flex-wrap mt-3">
-            <a href="/clients/new" class="btn btn-outline-primary">
-                New Client
-            </a>
+            <a href="/clients/new" class="btn btn-outline-primary">New Client</a>
+            <a href="/pets/new" class="btn btn-outline-success">New Pet</a>
+            <a href="/stays/new" class="btn btn-outline-warning">New Stay</a>
+            <a href="/users/new" class="btn btn-outline-dark">New User</a>
+        </div>
+    </div>
 
-            <a href="/pets/new" class="btn btn-outline-success">
-                New Pet
-            </a>
+    <div class="row mt-5 g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header">
+                    Recent Clients
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var client in Db.Clients.OrderByDescending(c => c.ClientId).Take(3))
+                    {
+                        <li class="list-group-item">
+                            @client.Name
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
 
-            <a href="/stays/new" class="btn btn-outline-warning">
-                New Stay
-            </a>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header">
+                    Recent Pets
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var pet in Db.Pets.OrderByDescending(p => p.PetId).Take(3))
+                    {
+                        <li class="list-group-item">
+                            @pet.Name - @pet.Species
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
 
-            <a href="/users/new" class="btn btn-outline-dark">
-                New User
-            </a>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header">
+                    Upcoming Stays
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var stay in Db.Stays.OrderBy(s => s.StartDate).Take(3))
+                    {
+                        <li class="list-group-item">
+                            Pet ID @stay.PetId - @stay.StartDate.ToShortDateString()
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 
