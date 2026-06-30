@@ -5,41 +5,78 @@
 
 <PageTitle>PetCarePro Dashboard</PageTitle>
 
-<h1>🐾 PetCarePro Dashboard</h1>
+<div class="container mt-4">
 
-<p>Welcome to the PetCarePro management system.</p>
-
-<div class="row mt-4">
-
-    <div class="col-md-3">
-        <div class="card text-center p-3 shadow-sm">
-            <h5>Clients</h5>
-            <h2>@Db.Clients.Count()</h2>
-            <a href="/clients" class="btn btn-primary">View</a>
-        </div>
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+        <h1 class="display-5">Welcome to PetCarePro</h1>
+        <p class="lead">
+            Manage clients, pets, stays and users from one central dashboard.
+        </p>
     </div>
 
-    <div class="col-md-3">
-        <div class="card text-center p-3 shadow-sm">
-            <h5>Pets</h5>
-            <h2>@Db.Pets.Count()</h2>
-            <a href="/pets" class="btn btn-primary">View</a>
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100 border-primary">
+                <div class="card-body">
+                    <h5>Clients</h5>
+                    <h1>@Db.Clients.Count()</h1>
+                    <a href="/clients" class="btn btn-primary">Manage</a>
+                </div>
+            </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100 border-success">
+                <div class="card-body">
+                    <h5>Pets</h5>
+                    <h1>@Db.Pets.Count()</h1>
+                    <a href="/pets" class="btn btn-success">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100 border-warning">
+                <div class="card-body">
+                    <h5>Stays</h5>
+                    <h1>@Db.Stays.Count()</h1>
+                    <a href="/stays" class="btn btn-warning">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100 border-dark">
+                <div class="card-body">
+                    <h5>Users</h5>
+                    <h1>@Db.Users.Count()</h1>
+                    <a href="/users" class="btn btn-dark">Manage</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-md-3">
-        <div class="card text-center p-3 shadow-sm">
-            <h5>Stays</h5>
-            <h2>@Db.Stays.Count()</h2>
-            <a href="/stays" class="btn btn-primary">View</a>
-        </div>
-    </div>
+    <div class="mt-5">
+        <h3>Quick Actions</h3>
 
-    <div class="col-md-3">
-        <div class="card text-center p-3 shadow-sm">
-            <h5>Users</h5>
-            <h2>@Db.Users.Count()</h2>
-            <a href="/users" class="btn btn-primary">View</a>
+        <div class="d-flex gap-3 flex-wrap mt-3">
+            <a href="/clients/new" class="btn btn-outline-primary">
+                New Client
+            </a>
+
+            <a href="/pets/new" class="btn btn-outline-success">
+                New Pet
+            </a>
+
+            <a href="/stays/new" class="btn btn-outline-warning">
+                New Stay
+            </a>
+
+            <a href="/users/new" class="btn btn-outline-dark">
+                New User
+            </a>
         </div>
     </div>
 
