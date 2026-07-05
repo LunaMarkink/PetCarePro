@@ -5,77 +5,88 @@
 
 <PageTitle>PetCarePro Dashboard</PageTitle>
 
-<div class="container mt-4">
+<div class="container-fluid dashboard-page">
 
-    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
-        <h1 class="display-5">Welcome to PetCarePro</h1>
-        <p class="lead">
-            Manage clients, pets, stays and users from one central dashboard.
-        </p>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm h-100 border-primary">
-                <div class="card-body">
-                    <h5>Clients</h5>
-                    <h1>@Db.Clients.Count()</h1>
-                    <a href="/clients" class="btn btn-primary">Manage</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm h-100 border-success">
-                <div class="card-body">
-                    <h5>Pets</h5>
-                    <h1>@Db.Pets.Count()</h1>
-                    <a href="/pets" class="btn btn-success">Manage</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm h-100 border-warning">
-                <div class="card-body">
-                    <h5>Stays</h5>
-                    <h1>@Db.Stays.Count()</h1>
-                    <a href="/stays" class="btn btn-warning">Manage</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm h-100 border-dark">
-                <div class="card-body">
-                    <h5>Users</h5>
-                    <h1>@Db.Users.Count()</h1>
-                    <a href="/users" class="btn btn-dark">Manage</a>
-                </div>
-            </div>
+    <div class="dashboard-hero">
+        <div>
+            <h1>Welcome to PetCarePro</h1>
+            <p>This is your dashboard where you can manage clients, pets, stays, care schedules and users.</p>
         </div>
     </div>
 
-    <div class="mt-5">
-        <h3>Quick Actions</h3>
+    <div class="row g-4 mt-2">
 
-        <div class="d-flex gap-3 flex-wrap mt-3">
-            <a href="/clients/new" class="btn btn-outline-primary">New Client</a>
-            <a href="/pets/new" class="btn btn-outline-success">New Pet</a>
-            <a href="/stays/new" class="btn btn-outline-warning">New Stay</a>
-            <a href="/users/new" class="btn btn-outline-dark">New User</a>
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div>
+                        <h6>Clients</h6>
+                        <h2>@Db.Clients.Count()</h2>
+                    </div>
+                    <div class="card-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <a href="/clients" class="card-link">View Details</a>
+            </div>
         </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div>
+                        <h6>Pets</h6>
+                        <h2>@Db.Pets.Count()</h2>
+                    </div>
+                    <div class="card-icon green">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                </div>
+                <a href="/pets" class="card-link">View Details</a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div>
+                        <h6>Stays</h6>
+                        <h2>@Db.Stays.Count()</h2>
+                    </div>
+                    <div class="card-icon orange">
+                        <i class="bi bi-calendar-check-fill"></i>
+                    </div>
+                </div>
+                <a href="/stays" class="card-link">View Details</a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div>
+                        <h6>Users</h6>
+                        <h2>@Db.Users.Count()</h2>
+                    </div>
+                    <div class="card-icon dark">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                </div>
+                <a href="/users" class="card-link">View Details</a>
+            </div>
+        </div>
+
     </div>
 
+    <div class="row g-4 mt-4">
 
-    <div class="row mt-5">
-    <div class="col-md-6">
-        <div class="card shadow-sm calendar-card">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">@currentMonth.ToString("MMMM yyyy")</h5>
-            </div>
+        <div class="col-lg-7">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <h4>Calendar</h4>
+                    <span>@currentMonth.ToString("MMMM yyyy")</span>
+                </div>
 
-            <div class="card-body">
                 <div class="calendar-grid calendar-header">
                     <div>Mon</div>
                     <div>Tue</div>
@@ -96,61 +107,74 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-    <div class="row mt-5 g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    Recent Clients
+        <div class="col-lg-5">
+            <div class="panel-card h-100">
+                <div class="panel-header">
+                    <h4>Quick Actions</h4>
                 </div>
-                <ul class="list-group list-group-flush">
+
+                <div class="quick-actions">
+                    <a href="/clients/new">New Client</a>
+                    <a href="/pets/new">New Pet</a>
+                    <a href="/stays/new">New Stay</a>
+                    <a href="/users/new">New User</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mt-4">
+
+        <div class="col-md-4">
+            <div class="panel-card h-100">
+                <div class="panel-header">
+                    <h4>Recent Clients</h4>
+                </div>
+
+                <ul class="dashboard-list">
                     @foreach (var client in Db.Clients.OrderByDescending(c => c.ClientId).Take(3))
                     {
-                        <li class="list-group-item">
-                            @client.Name
-                        </li>
+                        <li>@client.Name</li>
                     }
                 </ul>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    Recent Pets
+            <div class="panel-card h-100">
+                <div class="panel-header">
+                    <h4>Recent Pets</h4>
                 </div>
-                <ul class="list-group list-group-flush">
+
+                <ul class="dashboard-list">
                     @foreach (var pet in Db.Pets.OrderByDescending(p => p.PetId).Take(3))
                     {
-                        <li class="list-group-item">
-                            @pet.Name - @pet.Species
-                        </li>
+                        <li>@pet.Name - @pet.Species</li>
                     }
                 </ul>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    Upcoming Stays
+            <div class="panel-card h-100">
+                <div class="panel-header">
+                    <h4>Upcoming Stays</h4>
                 </div>
-                <ul class="list-group list-group-flush">
+
+                <ul class="dashboard-list">
                     @foreach (var stay in Db.Stays.OrderBy(s => s.StartDate).Take(3))
                     {
-                        <li class="list-group-item">
-                            Pet ID @stay.PetId - @stay.StartDate.ToShortDateString()
-                        </li>
+                        <li>Pet ID @stay.PetId - @stay.StartDate.ToShortDateString()</li>
                     }
                 </ul>
             </div>
         </div>
+
     </div>
 
 </div>
-
 
 @code {
     private DateTime currentMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
