@@ -185,8 +185,6 @@ C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\7muhk3xp32-{0}
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\qyk027oexf-{0}-abdmv1u4y3-abdmv1u4y3.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\d5hn20mjks-{0}-ne14ti1q68-ne14ti1q68.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\5udcjr7m4h-{0}-ig5xotzpx5-ig5xotzpx5.gz
-C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\uzxpfzl666-{0}-7k6sdaa00p-7k6sdaa00p.gz
-C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\amvtqcuj11-{0}-7k6sdaa00p-7k6sdaa00p.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\staticwebassets.development.json
@@ -201,3 +199,5 @@ C:\Users\marki\PetCarePro\PetCarePro\bin\Debug\net10.0\PetCarePro.runtimeconfig.
 C:\Users\marki\PetCarePro\PetCarePro\bin\Debug\net10.0\PetCarePro.pdb
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\PetCarePro.genruntimeconfig.cache
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\ref\PetCarePro.dll
+C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\uzxpfzl666-{0}-hw22piz5ph-hw22piz5ph.gz
+C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\amvtqcuj11-{0}-hw22piz5ph-hw22piz5ph.gz

@@ -4,17 +4,14 @@ using PetCarePro.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Database toevoegen
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=petcarepro.db"));
 
 var app = builder.Build();
 
-// Database alleen initialiseren als deze nog niet bestaat
 var databasePath = Path.Combine(app.Environment.ContentRootPath, "petcarepro.db");
 
 if (!File.Exists(databasePath))
@@ -36,7 +33,6 @@ if (!File.Exists(databasePath))
     }
 }
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -49,6 +45,7 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
