@@ -67,6 +67,38 @@
         </div>
     </div>
 
+
+    <div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm calendar-card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">@currentMonth.ToString("MMMM yyyy")</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="calendar-grid calendar-header">
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                    <div>Sun</div>
+                </div>
+
+                <div class="calendar-grid">
+                    @foreach (var day in calendarDays)
+                    {
+                        <div class="calendar-day @(day.Month != currentMonth.Month ? "muted" : "") @(day.Date == DateTime.Today ? "today" : "")">
+                            @day.Day
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="row mt-5 g-4">
         <div class="col-md-4">
             <div class="card shadow-sm h-100">
@@ -118,3 +150,25 @@
     </div>
 
 </div>
+
+
+@code {
+    private DateTime currentMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private List<DateTime> calendarDays = new();
+
+    protected override void OnInitialized()
+    {
+        BuildCalendar();
+    }
+
+    private void BuildCalendar()
+    {
+        var firstDay = currentMonth;
+        var startOffset = ((int)firstDay.DayOfWeek + 6) % 7;
+        var calendarStart = firstDay.AddDays(-startOffset);
+
+        calendarDays = Enumerable.Range(0, 42)
+            .Select(i => calendarStart.AddDays(i))
+            .ToList();
+    }
+}
