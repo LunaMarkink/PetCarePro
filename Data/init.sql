@@ -53,15 +53,6 @@ CREATE TABLE Cages (
     Size TEXT NOT NULL CHECK (Size IN ('S', 'M', 'L'))
 );
 
-CREATE TABLE Reservations (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    PetId INTEGER NOT NULL,
-    CageId INTEGER NOT NULL,
-    StartDate TEXT NOT NULL,
-    EndDate TEXT NOT NULL,
-    FOREIGN KEY (PetId) REFERENCES Pets(PetId),
-    FOREIGN KEY (CageId) REFERENCES Cages(Id)
-);
 
 INSERT INTO Clients (ClientId, Name, Address, PhoneNumber, Email)
 VALUES
@@ -88,7 +79,10 @@ INSERT INTO Stays
 VALUES
 (1, 1, '2026-07-01', '2026-07-07', 'A01', 'Reserved'),
 (2, 2, '2026-07-03', '2026-07-10', 'B02', 'Active'),
-(3, 3, '2026-07-12', '2026-07-18', 'A03', 'Completed');
+(3, 3, '2026-07-12', '2026-07-18', 'A03', 'Completed'),
+(4, 4, '2026-07-15', '2026-07-20', 'C04', 'Reserved'),
+(5, 5, '2026-07-18', '2026-07-25', 'B05', 'Reserved'),
+(6, 6, '2026-07-20', '2026-07-27', 'A06', 'Reserved');
 
 
 INSERT INTO CareSchedules
@@ -108,10 +102,12 @@ VALUES
 (2, 'employee1', 'welcome123', 'Employee'),
 (3, 'employee2', 'welcome123', 'Employee');
 
+
 INSERT INTO Cages (Id, Name, Size)
 VALUES
 (1, 'Large cage', 'L'),
 (2, 'Medium cage', 'M'),
-(3, 'Large cage', 'L');
-(4, 'Small cage', 'S');
+(3, 'Large cage', 'L'),
+(4, 'Small cage', 'S'),
 (5, 'Medium cage', 'M');
+
