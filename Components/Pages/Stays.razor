@@ -2,58 +2,68 @@
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+@using Microsoft.EntityFrameworkCore
 
 @inject AppDbContext Db
 
-<h3>Stays</h3>
+<div class="page-header">
+    <div>
+        <h1>Stays</h1>
+        <p>Manage all planned and active pet stays.</p>
+    </div>
 
-<a href="/stays/new" class="btn btn-success mb-3">Add new stay</a>
+    <a href="/stays/new" class="btn btn-warning">
+        New Stay
+    </a>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Pet ID</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Kennel Number</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="row g-4">
+    @foreach (var stay in stays)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="entity-card">
+                <div class="entity-card-header">
+                    <div>
+                        <h4>@(stay.Pet?.Name ?? $"Pet ID {stay.PetId}")</h4>
+                        <span>Stay ID: @stay.StayId</span>
+                    </div>
 
-    <tbody>
-        @foreach (var stay in stays)
-        {
-            <tr>
-                <td>@stay.StayId</td>
-                <td>@stay.PetId</td>
-                <td>@stay.StartDate.ToShortDateString()</td>
-                <td>@stay.EndDate.ToShortDateString()</td>
-                <td>@stay.KennelNumber</td>
-                <td>@stay.Status</td>
-                <td>
-                    <a class="btn btn-primary btn-sm"
+                    <div class="entity-icon stay-icon">
+                        <i class="bi bi-calendar-check-fill"></i>
+                    </div>
+                </div>
+
+                <div class="entity-info">
+                    <p><strong>Start Date:</strong> @stay.StartDate.ToShortDateString()</p>
+                    <p><strong>End Date:</strong> @stay.EndDate.ToShortDateString()</p>
+                    <p><strong>Kennel:</strong> @stay.KennelNumber</p>
+                    <p><strong>Status:</strong> <span class="status-badge">@stay.Status</span></p>
+                </div>
+
+                <div class="entity-actions">
+                    <a class="btn btn-outline-primary btn-sm"
                        href="/stays/edit/@stay.StayId">
                         Edit
                     </a>
 
-                    <button class="btn btn-danger btn-sm"
+                    <button class="btn btn-outline-danger btn-sm"
                             @onclick="() => Delete(stay)">
                         Delete
                     </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<Stay> stays = new();
 
     protected override void OnInitialized()
     {
-        stays = Db.Stays.ToList();
+        stays = Db.Stays
+            .Include(s => s.Pet)
+            .ToList();
     }
 
     private async Task Delete(Stay stay)
