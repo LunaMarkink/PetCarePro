@@ -305,3 +305,13 @@ h1:focus {
 .entity-actions {
     margin-top: 1.25rem;
 }
+
+.pet-icon {
+    background: #16a34a;
+}
+
+.entity-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}

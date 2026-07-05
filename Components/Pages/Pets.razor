@@ -5,52 +5,56 @@
 
 @inject AppDbContext Db
 
-<h3>Pets</h3>
+<div class="page-header">
+    <div>
+        <h1>Pets</h1>
+        <p>Manage all registered pets.</p>
+    </div>
 
-<a href="/pets/new" class="btn btn-success mb-3">Add new pet</a>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Species</th>
-            <th>Breed</th>
-            <th>Gender</th>
-            <th>Chip Number</th>
-            <th>Client ID</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var pet in pets)
-        {
-            <tr>
-                <td>@pet.PetId</td>
-                <td>@pet.Name</td>
-                <td>@pet.Species</td>
-                <td>@pet.Breed</td>
-                <td>@pet.Gender</td>
-                <td>@pet.ChipNumber</td>
-                <td>@pet.ClientId</td>
-
-
-    <td>
-    <a class="btn btn-primary btn-sm"
-       href="/pets/edit/@pet.PetId">
-        Edit
+    <a href="/pets/new" class="btn btn-success">
+        New Pet
     </a>
+</div>
 
-    <button class="btn btn-danger btn-sm"
-            @onclick="() => Delete(pet)">
-        Delete
-    </button>
-    </td>
-    </tr>
-        }
-    </tbody>
-</table>
+<div class="row g-4">
+    @foreach (var pet in pets)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="entity-card">
+                <div class="entity-card-header">
+                    <div>
+                        <h4>@pet.Name</h4>
+                        <span>Pet ID: @pet.PetId</span>
+                    </div>
+
+                    <div class="entity-icon pet-icon">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                </div>
+
+                <div class="entity-info">
+                    <p><strong>Species:</strong> @pet.Species</p>
+                    <p><strong>Breed:</strong> @pet.Breed</p>
+                    <p><strong>Gender:</strong> @pet.Gender</p>
+                    <p><strong>Chip Number:</strong> @pet.ChipNumber</p>
+                    <p><strong>Client ID:</strong> @pet.ClientId</p>
+                </div>
+
+                <div class="entity-actions">
+                    <a class="btn btn-outline-primary btn-sm"
+                       href="/pets/edit/@pet.PetId">
+                        Edit
+                    </a>
+
+                    <button class="btn btn-outline-danger btn-sm"
+                            @onclick="() => Delete(pet)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<Pet> pets = new();
