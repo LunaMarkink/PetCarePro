@@ -2,45 +2,52 @@
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
-@using Microsoft.EntityFrameworkCore
 
 @inject AppDbContext Db
 
-<h3>Clients</h3>
-<a href="/clients/new">Add new client</a>
+<div class="page-header">
+    <div>
+        <h1>Clients</h1>
+        <p>Manage all registered pet owners.</p>
+    </div>
 
-<table class="table">
-   <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>Actions</th>
-    </tr>
-</thead>
+    <a href="/clients/new" class="btn btn-primary">
+        New Client
+    </a>
+</div>
 
-    <tbody>
-        @foreach (var client in clients)
-        {
-            <tr>
-    <td>@client.ClientId</td>
-    <td>@client.Name</td>
-    <td>@client.Address</td>
-    <td>@client.PhoneNumber</td>
-    <td>@client.Email</td>
+<div class="row g-4">
+    @foreach (var client in clients)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="entity-card">
+                <div class="entity-card-header">
+                    <div>
+                        <h4>@client.Name</h4>
+                        <span>Client ID: @client.ClientId</span>
+                    </div>
 
-    <td>
-        <a class="btn btn-primary btn-sm"
-           href="/clients/edit/@client.ClientId">
-            Edit
-        </a>
-    </td>
-</tr>
-        }
-    </tbody>
-</table>
+                    <div class="entity-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+
+                <div class="entity-info">
+                    <p><strong>Address:</strong> @client.Address</p>
+                    <p><strong>Phone:</strong> @client.PhoneNumber</p>
+                    <p><strong>Email:</strong> @client.Email</p>
+                </div>
+
+                <div class="entity-actions">
+                    <a class="btn btn-outline-primary btn-sm"
+                       href="/clients/edit/@client.ClientId">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<Client> clients = new();
