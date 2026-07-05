@@ -1,48 +1,36 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">PetCarePro</a>
-    </div>
+﻿<div class="sidebar-header">
+    <h2>PetCarePro</h2>
+    <p>Animal Boarding System</p>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<nav class="sidebar-menu">
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
+    <NavLink class="menu-item" href="" Match="NavLinkMatch.All">
+        Dashboard
+    </NavLink>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>
-                Home
-            </NavLink>
-        </div>
+    <NavLink class="menu-item" href="clients">
+        Clients
+    </NavLink>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="clients">
-                Clients
-            </NavLink>
-        </div>
+    <NavLink class="menu-item" href="pets">
+        Pets
+    </NavLink>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pets">
-                Pets
-            </NavLink>
-        </div>
-       <div class="nav-item px-3">
-    <NavLink class="nav-link" href="stays">
+    <NavLink class="menu-item" href="stays">
         Stays
     </NavLink>
-</div>
 
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="careschedules">
+    <NavLink class="menu-item" href="careschedules">
         Care Schedules
     </NavLink>
-</div>
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="users">
+
+    <NavLink class="menu-item" href="users">
         Users
     </NavLink>
-</div>
 
-    </nav>
+</nav>
+
+<div class="sidebar-footer">
+    <small>PetCarePro v1.0</small>
 </div>
