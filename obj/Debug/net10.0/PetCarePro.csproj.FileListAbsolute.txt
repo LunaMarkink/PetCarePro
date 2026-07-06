@@ -137,7 +137,6 @@ C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\scopedcss\Components\Layo
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\scopedcss\bundle\PetCarePro.styles.css
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\scopedcss\projectbundle\PetCarePro.bundle.scp.css
-C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\f1jy5fkan7-{0}-khy4lop6wu-khy4lop6wu.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\4v4mqle8fq-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\1dje0gpxgj-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\3wkouvkpf5-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -201,3 +200,4 @@ C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\PetCarePro.genruntimeconf
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\ref\PetCarePro.dll
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\uzxpfzl666-{0}-8phfw3b2sb-8phfw3b2sb.gz
 C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\amvtqcuj11-{0}-8phfw3b2sb-8phfw3b2sb.gz
+C:\Users\marki\PetCarePro\PetCarePro\obj\Debug\net10.0\compressed\f1jy5fkan7-{0}-aaq3tu1g3t-aaq3tu1g3t.gz

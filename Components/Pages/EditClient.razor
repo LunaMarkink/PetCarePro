@@ -1,5 +1,6 @@
 @page "/clients/edit/{Id:int}"
 @page "/clients/new"
+@rendermode InteractiveServer
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
@@ -29,7 +30,7 @@
         }
         else
         {
-            <EditForm Model="client" OnValidSubmit="SaveClient">
+            <EditForm Model="client" OnValidSubmit="SaveClient" FormName="ClientForm">
 
                 <DataAnnotationsValidator />
                 <ValidationSummary />

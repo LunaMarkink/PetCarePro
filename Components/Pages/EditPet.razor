@@ -17,7 +17,7 @@
 }
 else
 {
-    <EditForm Model="pet" OnValidSubmit="SavePet">
+    <EditForm Model="pet" OnValidSubmit="SavePet" FormName="PetForm">
         <div>
             <label>Name</label>
             <InputText class="form-control" @bind-Value="pet.Name" />
