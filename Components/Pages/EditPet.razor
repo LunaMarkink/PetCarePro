@@ -10,56 +10,80 @@
 
 <PageTitle>@(Id == 0 ? "New Pet" : "Edit Pet")</PageTitle>
 
-<h1>@(Id == 0 ? "New Pet" : "Edit Pet")</h1>
+<div class="form-container">
+    <div class="form-card">
 
-@if (pet is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <EditForm Model="pet" OnValidSubmit="SavePet" FormName="PetForm">
-        <div>
-            <label>Name</label>
-            <InputText class="form-control" @bind-Value="pet.Name" />
-        </div>
+        <h1 class="form-title">
+            @(Id == 0 ? "New Pet" : "Edit Pet")
+        </h1>
 
-        <div>
-            <label>Species</label>
-            <InputText class="form-control" @bind-Value="pet.Species" />
-        </div>
+        <p class="form-subtitle">
+            @(Id == 0
+                ? "Add a new pet to the PetCarePro system."
+                : "Update the pet's information.")
+        </p>
 
-        <div>
-            <label>Breed</label>
-            <InputText class="form-control" @bind-Value="pet.Breed" />
-        </div>
+        @if (pet is null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            <EditForm Model="pet" OnValidSubmit="SavePet">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <div>
-            <label>Gender</label>
-            <InputText class="form-control" @bind-Value="pet.Gender" />
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <InputText class="form-control" @bind-Value="pet.Name" />
+                </div>
 
-        <div>
-            <label>Chip Number</label>
-            <InputText class="form-control" @bind-Value="pet.ChipNumber" />
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Species</label>
+                    <InputText class="form-control" @bind-Value="pet.Species" />
+                </div>
 
-        <div>
-            <label>Medical History</label>
-            <InputText class="form-control" @bind-Value="pet.MedicalHistory" />
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Breed</label>
+                    <InputText class="form-control" @bind-Value="pet.Breed" />
+                </div>
 
-        <div>
-            <label>Client ID</label>
-            <InputNumber class="form-control" @bind-Value="pet.ClientId" />
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <InputText class="form-control" @bind-Value="pet.Gender" />
+                </div>
 
-        <br />
+                <div class="mb-3">
+                    <label class="form-label">Chip Number</label>
+                    <InputText class="form-control" @bind-Value="pet.ChipNumber" />
+                </div>
 
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-secondary" href="/pets">Cancel</a>
-    </EditForm>
-}
+                <div class="mb-3">
+                    <label class="form-label">Medical History</label>
+                    <InputText class="form-control" @bind-Value="pet.MedicalHistory" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Client ID</label>
+                    <InputNumber class="form-control" @bind-Value="pet.ClientId" />
+                </div>
+
+                <div class="form-buttons">
+                    <button class="btn btn-success px-4" type="submit">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Save
+                    </button>
+
+                    <a href="/pets" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+                    </a>
+                </div>
+            </EditForm>
+        }
+
+    </div>
+</div>
 
 @code {
     [Parameter]
