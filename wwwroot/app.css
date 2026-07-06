@@ -330,3 +330,81 @@ h1:focus {
     font-weight: 600;
 }
 
+/* ---------- Form Layout ---------- */
+
+.form-container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(15,23,42,.08);
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: .25rem;
+}
+
+.form-subtitle {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: .4rem;
+}
+
+.form-control,
+.form-select {
+    border-radius: 12px;
+    padding: .8rem 1rem;
+    border: 1px solid #d1d5db;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 .2rem rgba(37,99,235,.15);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form-card {
+    animation: fadeIn .35s ease;
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+        transform: translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+
+}
+
+.form-card .btn i {
+
+    margin-right: .4rem;
+
+}

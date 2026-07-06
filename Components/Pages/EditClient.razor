@@ -9,43 +9,84 @@
 
 <PageTitle>@(Id == 0 ? "New Client" : "Edit Client")</PageTitle>
 
-<h1>@(Id == 0 ? "New Client" : "Edit Client")</h1>
+<div class="form-container">
 
-@if (client is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <EditForm Model="client" OnValidSubmit="SaveClient">
-        <div>
-            <label>Name</label>
-            <InputText class="form-control" @bind-Value="client.Name" />
-        </div>
+    <div class="form-card">
 
-        <div>
-            <label>Address</label>
-            <InputText class="form-control" @bind-Value="client.Address" />
-        </div>
+        <h1 class="form-title">
+            @(Id == 0 ? "New Client" : "Edit Client")
+        </h1>
 
-        <div>
-            <label>Phone number</label>
-            <InputText class="form-control" @bind-Value="client.PhoneNumber" />
-        </div>
+        <p class="form-subtitle">
+            @(Id == 0
+                ? "Add a new client to the PetCarePro system."
+                : "Update the client's information.")
+        </p>
 
-        <div>
-            <label>Email</label>
-            <InputText class="form-control" @bind-Value="client.Email" />
-        </div>
+        @if (client is null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            <EditForm Model="client" OnValidSubmit="SaveClient">
 
-        <br />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-secondary" href="/clients">Cancel</a>
-    </EditForm>
-}
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <InputText class="form-control"
+                               @bind-Value="client.Name" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <InputText class="form-control"
+                               @bind-Value="client.Address" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <InputText class="form-control"
+                               @bind-Value="client.PhoneNumber" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Email Address</label>
+                    <InputText class="form-control"
+                               @bind-Value="client.Email" />
+                </div>
+
+                <div class="form-buttons">
+
+                    <button class="btn btn-primary px-4"
+                            type="submit">
+
+                        <i class="bi bi-check-circle-fill"></i>
+                        Save
+
+                    </button>
+
+                    <a href="/clients"
+                       class="btn btn-outline-secondary px-4">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </EditForm>
+        }
+
+    </div>
+
+</div>
 
 @code {
+
     [Parameter]
     public int Id { get; set; }
 
@@ -53,7 +94,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        client = Id == 0 ? new Client() : await Db.Clients.FindAsync(Id);
+        client = Id == 0
+            ? new Client()
+            : await Db.Clients.FindAsync(Id);
     }
 
     private async Task SaveClient()
@@ -64,6 +107,8 @@ else
         }
 
         await Db.SaveChangesAsync();
+
         Navigation.NavigateTo("/clients");
     }
+
 }
