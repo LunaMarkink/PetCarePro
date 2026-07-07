@@ -1,8 +1,11 @@
 @page "/careschedules"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
 @using Microsoft.EntityFrameworkCore
+
 
 @inject AppDbContext Db
 

@@ -1,6 +1,8 @@
 @page "/pets/edit/{Id:int}"
 @page "/pets/new"
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
 @using PetCarePro.Classes
 @using PetCarePro.Data

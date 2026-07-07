@@ -1,7 +1,12 @@
 @page "/pets"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+
+
 
 @inject AppDbContext Db
 

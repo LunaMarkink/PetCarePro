@@ -12,21 +12,23 @@
             <div>
                 <strong>PetCarePro</strong>
             </div>
+<div class="topbar-user">
+    <AuthorizeView>
+        <Authorized Context="auth">
+            <span class="user-name">
+                <i class="bi bi-person-circle"></i>
+                @auth.User.Identity?.Name
+            </span>
+        </Authorized>
 
-            <div class="topbar-user">
-                <AuthorizeView>
-                    <Authorized>
-                        <span class="user-name">
-                            @context.User.Identity?.Name
-                        </span>
-                    </Authorized>
-                    <NotAuthorized>
-                        <span class="user-name">
-                    
-                        </span>
-                    </NotAuthorized>
-            
-            </div>
+        <NotAuthorized>
+            <a href="/login" class="login-link">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Login
+            </a>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
         </header>
 
         <section class="app-content">

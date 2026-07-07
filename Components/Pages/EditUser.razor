@@ -1,9 +1,12 @@
 @page "/users/edit/{Id:int}"
 @page "/users/new"
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "admin")]
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+
 
 @inject AppDbContext Db
 @inject NavigationManager Navigation

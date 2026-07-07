@@ -1,9 +1,12 @@
 @page "/clients/edit/{Id:int}"
 @page "/clients/new"
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+
 
 @inject AppDbContext Db
 @inject NavigationManager Navigation
