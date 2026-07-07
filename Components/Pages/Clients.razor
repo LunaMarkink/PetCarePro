@@ -41,11 +41,16 @@
                 </div>
 
                 <div class="entity-actions">
-                    <a class="btn btn-outline-primary btn-sm"
-                       href="/clients/edit/@client.ClientId">
-                        Edit
-                    </a>
-                </div>
+    <a class="btn btn-outline-primary btn-sm"
+       href="/clients/edit/@client.ClientId">
+        Edit
+    </a>
+
+    <button class="btn btn-outline-danger btn-sm"
+            @onclick="() => Delete(client)">
+        Delete
+    </button>
+</div>
             </div>
         </div>
     }
@@ -57,5 +62,12 @@
     protected override void OnInitialized()
     {
         clients = Db.Clients.ToList();
+    }
+
+    private async Task Delete(Client client)
+    {
+        Db.Clients.Remove(client);
+        await Db.SaveChangesAsync();
+        clients.Remove(client);
     }
 }
