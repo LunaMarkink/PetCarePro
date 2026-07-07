@@ -1,0 +1,85 @@
+@page "/login"
+@rendermode InteractiveServer
+
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using PetCarePro.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject AppDbContext Db
+@inject NavigationManager Navigation
+@inject IHttpContextAccessor HttpContextAccessor
+
+<PageTitle>Login</PageTitle>
+
+<div class="form-container">
+    <div class="form-card">
+
+        <h1 class="form-title">Login</h1>
+        <p class="form-subtitle">Sign in to PetCarePro.</p>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">
+                @errorMessage
+            </div>
+        }
+
+        <EditForm Model="loginModel" OnValidSubmit="LoginUser" FormName="LoginForm">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <InputText class="form-control" @bind-Value="loginModel.Username" />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <InputText class="form-control" type="password" @bind-Value="loginModel.Password" />
+            </div>
+
+            <button class="btn btn-primary px-4" type="submit">
+                Login
+            </button>
+        </EditForm>
+
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private string? errorMessage;
+
+    private async Task LoginUser()
+    {
+        var user = await Db.Users.FirstOrDefaultAsync(u =>
+            u.Username == loginModel.Username &&
+            u.Password == loginModel.Password);
+
+        if (user is null)
+        {
+            errorMessage = "Invalid username or password.";
+            return;
+        }
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ClaimsPrincipal(identity);
+
+        await HttpContextAccessor.HttpContext!.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            principal);
+
+        Navigation.NavigateTo("/");
+    }
+
+    private class LoginModel
+    {
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+}
