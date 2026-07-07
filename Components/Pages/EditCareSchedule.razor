@@ -10,43 +10,84 @@
 
 <PageTitle>@(Id == 0 ? "New Care Schedule" : "Edit Care Schedule")</PageTitle>
 
-<h3>@(Id == 0 ? "New Care Schedule" : "Edit Care Schedule")</h3>
+<div class="form-container">
+    <div class="form-card">
 
-@if (careSchedule is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <EditForm Model="careSchedule" OnValidSubmit="SaveCareSchedule">
+        <h1 class="form-title">
+            @(Id == 0 ? "New Care Schedule" : "Edit Care Schedule")
+        </h1>
 
-        <div class="mb-3">
-            <label class="form-label">Pet ID</label>
-            <InputNumber class="form-control" @bind-Value="careSchedule.PetId" />
-        </div>
+        <p class="form-subtitle">
+            @(Id == 0
+                ? "Add a new care schedule to the PetCarePro system."
+                : "Update the care schedule information.")
+        </p>
 
-        <div class="mb-3">
-            <label class="form-label">Feeding</label>
-            <InputText class="form-control" @bind-Value="careSchedule.Feeding" />
-        </div>
+        @if (careSchedule is null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            <EditForm Model="careSchedule"
+                      OnValidSubmit="SaveCareSchedule"
+                      FormName="CareScheduleForm">
 
-        <div class="mb-3">
-            <label class="form-label">Medication</label>
-            <InputText class="form-control" @bind-Value="careSchedule.Medication" />
-        </div>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-        <div class="mb-3">
-            <label class="form-label">Notes</label>
-            <InputText class="form-control" @bind-Value="careSchedule.Notes" />
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Pet ID</label>
+                    <InputNumber class="form-control"
+                                 @bind-Value="careSchedule.PetId" />
+                </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-secondary ms-2" href="/careschedules">Cancel</a>
+                <div class="mb-3">
+                    <label class="form-label">Feeding</label>
+                    <InputText class="form-control"
+                               @bind-Value="careSchedule.Feeding" />
+                </div>
 
-    </EditForm>
-}
+                <div class="mb-3">
+                    <label class="form-label">Medication</label>
+                    <InputText class="form-control"
+                               @bind-Value="careSchedule.Medication" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Notes</label>
+                    <InputText class="form-control"
+                               @bind-Value="careSchedule.Notes" />
+                </div>
+
+                <div class="form-buttons">
+
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+
+                        <i class="bi bi-check-circle-fill"></i>
+                        Save
+
+                    </button>
+
+                    <a href="/careschedules"
+                       class="btn btn-outline-secondary px-4">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </EditForm>
+        }
+
+    </div>
+</div>
 
 @code {
+
     [Parameter]
     public int Id { get; set; }
 
@@ -54,7 +95,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        careSchedule = Id == 0 ? new CareSchedule() : await Db.CareSchedules.FindAsync(Id);
+        careSchedule = Id == 0
+            ? new CareSchedule
+            {
+                Feeding = "",
+                Medication = "",
+                Notes = ""
+            }
+            : await Db.CareSchedules.FindAsync(Id);
     }
 
     private async Task SaveCareSchedule()
@@ -65,6 +113,8 @@ else
         }
 
         await Db.SaveChangesAsync();
+
         Navigation.NavigateTo("/careschedules");
     }
+
 }
