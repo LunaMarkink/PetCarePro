@@ -2,56 +2,67 @@
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+@using Microsoft.EntityFrameworkCore
 
 @inject AppDbContext Db
 
-<h3>Care Schedules</h3>
+<div class="page-header">
+    <div>
+        <h1>Care Schedules</h1>
+        <p>Manage feeding, medication and care notes for pets.</p>
+    </div>
 
-<a href="/careschedules/new" class="btn btn-success mb-3">Add new care schedule</a>
+    <a href="/careschedules/new" class="btn btn-primary">
+        New Care Schedule
+    </a>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Pet ID</th>
-            <th>Feeding</th>
-            <th>Medication</th>
-            <th>Notes</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="row g-4">
+    @foreach (var careSchedule in careSchedules)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="entity-card">
+                <div class="entity-card-header">
+                    <div>
+                        <h4>@(careSchedule.Pet?.Name ?? $"Pet ID {careSchedule.PetId}")</h4>
+                        <span>Care Schedule ID: @careSchedule.CareScheduleId</span>
+                    </div>
 
-    <tbody>
-        @foreach (var careSchedule in careSchedules)
-        {
-            <tr>
-                <td>@careSchedule.CareScheduleId</td>
-                <td>@careSchedule.PetId</td>
-                <td>@careSchedule.Feeding</td>
-                <td>@careSchedule.Medication</td>
-                <td>@careSchedule.Notes</td>
-                <td>
-                    <a class="btn btn-primary btn-sm"
+                    <div class="entity-icon care-icon">
+                        <i class="bi bi-clipboard2-heart-fill"></i>
+                    </div>
+                </div>
+
+                <div class="entity-info">
+                    <p><strong>Feeding:</strong> @careSchedule.Feeding</p>
+                    <p><strong>Medication:</strong> @careSchedule.Medication</p>
+                    <p><strong>Notes:</strong> @careSchedule.Notes</p>
+                </div>
+
+                <div class="entity-actions">
+                    <a class="btn btn-outline-primary btn-sm"
                        href="/careschedules/edit/@careSchedule.CareScheduleId">
                         Edit
                     </a>
 
-                    <button class="btn btn-danger btn-sm"
+                    <button class="btn btn-outline-danger btn-sm"
                             @onclick="() => Delete(careSchedule)">
                         Delete
                     </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<CareSchedule> careSchedules = new();
 
     protected override void OnInitialized()
     {
-        careSchedules = Db.CareSchedules.ToList();
+        careSchedules = Db.CareSchedules
+            .Include(c => c.Pet)
+            .ToList();
     }
 
     private async Task Delete(CareSchedule careSchedule)

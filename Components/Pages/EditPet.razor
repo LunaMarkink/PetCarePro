@@ -9,7 +9,6 @@
 @inject NavigationManager Navigation
 
 <PageTitle>@(Id == 0 ? "New Pet" : "Edit Pet")</PageTitle>
-
 <div class="form-container">
     <div class="form-card">
 
@@ -29,7 +28,7 @@
         }
         else
         {
-            <EditForm Model="pet" OnValidSubmit="SavePet">
+            <EditForm Model="pet" OnValidSubmit="SavePet" FormName="PetForm">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
