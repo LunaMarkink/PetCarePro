@@ -24,8 +24,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<AuthenticationStateProvider,
-HttpContextAuthenticationStateProvider>();
 
 var app = builder.Build();
 
@@ -57,7 +55,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAntiforgery();
 
@@ -65,7 +71,6 @@ app.MapStaticAssets();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
 
 app.MapPost("/login-submit", async (HttpContext context, AppDbContext db) =>
 {
@@ -102,12 +107,10 @@ app.MapPost("/login-submit", async (HttpContext context, AppDbContext db) =>
     return Results.Redirect("/");
 }).DisableAntiforgery();
 
-app.Run();
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.MapPost("/logout", async (HttpContext context) =>
 {
     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     return Results.Redirect("/login");
-});
+}).DisableAntiforgery();
+
+app.Run();
