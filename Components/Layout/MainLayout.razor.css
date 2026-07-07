@@ -78,3 +78,17 @@
         padding: 1rem;
     }
 }
+
+.topbar-user span,
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #334155;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    color: #2563eb;
+}

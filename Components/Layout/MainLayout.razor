@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="app-shell">
     <aside class="app-sidebar">
@@ -12,6 +14,17 @@
             </div>
 
             <div class="topbar-user">
+                <AuthorizeView>
+                    <Authorized>
+                        <span class="user-name">
+                            @context.User.Identity?.Name
+                        </span>
+                    </Authorized>
+                    <NotAuthorized>
+                        <span class="user-name">
+                    
+                        </span>
+                    </NotAuthorized>
             
             </div>
         </header>

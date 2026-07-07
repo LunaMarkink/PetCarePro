@@ -79,6 +79,20 @@
         padding: 1rem;
     }
 }
+
+.topbar-user span[b-89oynelnr1],
+.login-link[b-89oynelnr1] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #334155;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover[b-89oynelnr1] {
+    color: #2563eb;
+}
 /* /Components/Layout/NavMenu.razor.rz.scp.css */
 .sidebar-header[b-ji6n9o4mb0] {
     padding: 2rem 1.5rem;

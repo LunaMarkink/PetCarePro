@@ -78,3 +78,17 @@
         padding: 1rem;
     }
 }
+
+.topbar-user span[b-89oynelnr1],
+.login-link[b-89oynelnr1] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #334155;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover[b-89oynelnr1] {
+    color: #2563eb;
+}
