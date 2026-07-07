@@ -5,44 +5,54 @@
 
 @inject AppDbContext Db
 
-<h3>Users</h3>
+<div class="page-header">
+    <div>
+        <h1>Users</h1>
+        <p>Manage system users and roles.</p>
+    </div>
 
-<a href="/users/new" class="btn btn-success mb-3">Add new user</a>
+    <a href="/users/new" class="btn btn-dark">
+        New User
+    </a>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="row g-4">
+    @foreach (var user in users)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="entity-card">
+                <div class="entity-card-header">
+                    <div>
+                        <h4>@user.Username</h4>
+                        <span>User ID: @user.UserId</span>
+                    </div>
 
-    <tbody>
-        @foreach (var user in users)
-        {
-            <tr>
-                <td>@user.UserId</td>
-                <td>@user.Username</td>
-                <td>@user.Password</td>
-                <td>@user.Role</td>
-                <td>
-                    <a class="btn btn-primary btn-sm"
+                    <div class="entity-icon user-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                </div>
+
+                <div class="entity-info">
+                    <p><strong>Username:</strong> @user.Username</p>
+                    <p><strong>Password:</strong> @user.Password</p>
+                    <p><strong>Role:</strong> <span class="role-badge">@user.Role</span></p>
+                </div>
+
+                <div class="entity-actions">
+                    <a class="btn btn-outline-primary btn-sm"
                        href="/users/edit/@user.UserId">
                         Edit
                     </a>
 
-                    <button class="btn btn-danger btn-sm"
+                    <button class="btn btn-outline-danger btn-sm"
                             @onclick="() => Delete(user)">
                         Delete
                     </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<User> users = new();
