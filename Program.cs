@@ -4,6 +4,7 @@ using PetCarePro.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<AuthenticationStateProvider,
+HttpContextAuthenticationStateProvider>();
 
 var app = builder.Build();
 
@@ -62,6 +65,42 @@ app.MapStaticAssets();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+
+app.MapPost("/login-submit", async (HttpContext context, AppDbContext db) =>
+{
+    var form = await context.Request.ReadFormAsync();
+
+    var username = form["Username"].ToString();
+    var password = form["Password"].ToString();
+
+    var user = db.Users.FirstOrDefault(u =>
+        u.Username == username &&
+        u.Password == password);
+
+    if (user is null)
+    {
+        return Results.Redirect("/login");
+    }
+
+    var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim(ClaimTypes.Role, user.Role)
+    };
+
+    var identity = new ClaimsIdentity(
+        claims,
+        CookieAuthenticationDefaults.AuthenticationScheme);
+
+    var principal = new ClaimsPrincipal(identity);
+
+    await context.SignInAsync(
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        principal);
+
+    return Results.Redirect("/");
+}).DisableAntiforgery();
 
 app.Run();
 app.UseAuthentication();

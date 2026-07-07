@@ -1,15 +1,4 @@
 @page "/login"
-@rendermode InteractiveServer
-
-@using System.Security.Claims
-@using Microsoft.AspNetCore.Authentication
-@using Microsoft.AspNetCore.Authentication.Cookies
-@using PetCarePro.Data
-@using Microsoft.EntityFrameworkCore
-
-@inject AppDbContext Db
-@inject NavigationManager Navigation
-@inject IHttpContextAccessor HttpContextAccessor
 
 <PageTitle>Login</PageTitle>
 
@@ -19,69 +8,22 @@
         <h1 class="form-title">Login</h1>
         <p class="form-subtitle">Sign in to PetCarePro.</p>
 
-        @if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <div class="alert alert-danger">
-                @errorMessage
+       <form method="post" action="/login-submit">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input name="Username" class="form-control" />
             </div>
-        }
 
-        <form method="post" @formname="LoginForm" @onsubmit="LoginUser">
-    <div class="mb-3">
-        <label class="form-label">Username</label>
-        <input class="form-control" @bind="loginModel.Username" />
-    </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input name="Password" type="password" class="form-control" />
+            </div>
 
-    <div class="mb-4">
-        <label class="form-label">Password</label>
-        <input class="form-control" type="password" @bind="loginModel.Password" />
-    </div>
-
-    <button class="btn btn-primary px-4" type="submit">
-        Login
-    </button>
-</form>
+            <button class="btn btn-primary px-4" type="submit">
+                Login
+            </button>
+        </form>
 
     </div>
 </div>
 
-@code {
-
-[SupplyParameterFromForm(FormName = "LoginForm")]
-private LoginModel loginModel { get; set; } = new();
-    private string? errorMessage;
-
-    private async Task LoginUser()
-    {
-        var user = await Db.Users.FirstOrDefaultAsync(u =>
-            u.Username == loginModel.Username &&
-            u.Password == loginModel.Password);
-
-        if (user is null)
-        {
-            errorMessage = "Invalid username or password.";
-            return;
-        }
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContextAccessor.HttpContext!.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            principal);
-
-        Navigation.NavigateTo("/");
-    }
-
-    private class LoginModel
-    {
-        public string Username { get; set; } = "";
-        public string Password { get; set; } = "";
-    }
-}
