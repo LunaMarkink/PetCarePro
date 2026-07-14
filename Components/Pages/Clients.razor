@@ -1,5 +1,6 @@
 @page "/clients"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
 
 @using PetCarePro.Classes
@@ -53,10 +54,23 @@ else
                     </div>
 
                     <div class="entity-info">
-                        <p><strong>Address:</strong> @client.Address</p>
-                        <p><strong>Phone:</strong> @client.PhoneNumber</p>
-                        <p><strong>Email:</strong> @client.Email</p>
-                    </div>
+    <p><strong>Address:</strong> @client.Address</p>
+    <p><strong>Phone:</strong> @client.PhoneNumber</p>
+    <p><strong>Email:</strong> @client.Email</p>
+
+    <p>
+        <strong>Pets:</strong>
+
+        @if (client.Pets.Any())
+        {
+            @string.Join(", ", client.Pets.Select(p => p.Name))
+        }
+        else
+        {
+            <span>No pets registered</span>
+        }
+    </p>
+</div>
 
                     <div class="entity-actions">
                         <a class="btn btn-outline-primary btn-sm"
@@ -88,9 +102,13 @@ else
             client.PhoneNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
     protected override void OnInitialized()
-    {
-        clients = Db.Clients.ToList();
-    }
+{
+    clients = Db.Clients
+        .Include(client => client.Pets)
+        .OrderBy(client => client.Name)
+        .ToList();
+}
+
 
     private async Task Delete(Client client)
     {
