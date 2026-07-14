@@ -2,6 +2,7 @@
 @page "/pets/new"
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
 
 @using PetCarePro.Classes
@@ -77,11 +78,19 @@
                     <ValidationMessage For="@(() => pet.MedicalHistory)" />
                 </div>
 
-                <div class="mb-4">
-                    <label class="form-label">Client ID</label>
-                    <InputNumber class="form-control" @bind-Value="pet.ClientId" />
-                    <ValidationMessage For="@(() => pet.ClientId)" />
-                </div>
+                 <div class="mb-4">
+                    <label class="form-label">Owner</label>
+
+                <InputSelect class="form-select" @bind-Value="pet.ClientId">
+        <option value="0">-- Select an owner --</option>
+        @foreach (var client in clients)
+        {
+            <option value="@client.ClientId">@client.Name</option>
+        }
+    </InputSelect>
+
+    <ValidationMessage For="@(() => pet.ClientId)" />
+</div>
 
                 <div class="form-buttons">
                     <button class="btn btn-success px-4" type="submit">
@@ -105,11 +114,18 @@
     public int Id { get; set; }
 
     private Pet? pet;
+    private List<Client> clients = new();
 
-    protected override async Task OnInitializedAsync()
-    {
-        pet = Id == 0 ? new Pet() : await Db.Pets.FindAsync(Id);
-    }
+protected override async Task OnInitializedAsync()
+{
+    clients = await Db.Clients
+        .OrderBy(c => c.Name)
+        .ToListAsync();
+
+    pet = Id == 0
+        ? new Pet()
+        : await Db.Pets.FindAsync(Id);
+}
 
     private async Task SavePet()
     {
