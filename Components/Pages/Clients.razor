@@ -4,6 +4,7 @@
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
+@rendermode InteractiveServer
 
 @inject AppDbContext Db
 
@@ -13,51 +14,78 @@
         <p>Manage all registered pet owners.</p>
     </div>
 
+
+<div class="mb-4">
+    <input class="form-control"
+           placeholder="Search by name, email or phone number..."
+           @bind="searchTerm"
+           @bind:event="oninput" />
+</div>
+
+
     <a href="/clients/new" class="btn btn-primary">
         New Client
     </a>
 </div>
 
-<div class="row g-4">
-    @foreach (var client in clients)
-    {
-        <div class="col-lg-4 col-md-6">
-            <div class="entity-card">
-                <div class="entity-card-header">
-                    <div>
-                        <h4>@client.Name</h4>
-                        <span>Client ID: @client.ClientId</span>
+@if (!filteredClients.Any())
+{
+    <div class="alert alert-info">
+        No clients found.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var client in filteredClients)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="entity-card">
+                    <div class="entity-card-header">
+                        <div>
+                            <h4>@client.Name</h4>
+                            <span>Client ID: @client.ClientId</span>
+                        </div>
+
+                        <div class="entity-icon">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
                     </div>
 
-                    <div class="entity-icon">
-                        <i class="bi bi-person-fill"></i>
+                    <div class="entity-info">
+                        <p><strong>Address:</strong> @client.Address</p>
+                        <p><strong>Phone:</strong> @client.PhoneNumber</p>
+                        <p><strong>Email:</strong> @client.Email</p>
+                    </div>
+
+                    <div class="entity-actions">
+                        <a class="btn btn-outline-primary btn-sm"
+                           href="/clients/edit/@client.ClientId">
+                            Edit
+                        </a>
+
+                        <button class="btn btn-outline-danger btn-sm"
+                                @onclick="() => Delete(client)">
+                            Delete
+                        </button>
                     </div>
                 </div>
-
-                <div class="entity-info">
-                    <p><strong>Address:</strong> @client.Address</p>
-                    <p><strong>Phone:</strong> @client.PhoneNumber</p>
-                    <p><strong>Email:</strong> @client.Email</p>
-                </div>
-
-                <div class="entity-actions">
-    <a class="btn btn-outline-primary btn-sm"
-       href="/clients/edit/@client.ClientId">
-        Edit
-    </a>
-
-    <button class="btn btn-outline-danger btn-sm"
-            @onclick="() => Delete(client)">
-        Delete
-    </button>
-</div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
 
 @code {
     private List<Client> clients = new();
+    private string searchTerm = string.Empty;
+
+    private IEnumerable<Client> filteredClients =>
+    string.IsNullOrWhiteSpace(searchTerm)
+        ? clients
+        : clients.Where(client =>
+            client.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            client.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            client.PhoneNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
     protected override void OnInitialized()
     {
