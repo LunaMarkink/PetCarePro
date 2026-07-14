@@ -37,16 +37,19 @@
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <InputText class="form-control" @bind-Value="pet.Name" />
+                    <ValidationMessage For="@(() => pet.Name)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Species</label>
                     <InputText class="form-control" @bind-Value="pet.Species" />
+                    <ValidationMessage For="@(() => pet.Species)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Breed</label>
                     <InputText class="form-control" @bind-Value="pet.Breed" />
+                    <ValidationMessage For="@(() => pet.Breed)" />
                 </div>
 
                 <div class="mb-3">
@@ -59,21 +62,25 @@
                 <div class="mb-3">
                     <label class="form-label">Gender</label>
                     <InputText class="form-control" @bind-Value="pet.Gender" />
+                    <ValidationMessage For="@(() => pet.Gender)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Chip Number</label>
                     <InputText class="form-control" @bind-Value="pet.ChipNumber" />
+                    <ValidationMessage For="@(() => pet.ChipNumber)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Medical History</label>
                     <InputText class="form-control" @bind-Value="pet.MedicalHistory" />
+                    <ValidationMessage For="@(() => pet.MedicalHistory)" />
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Client ID</label>
                     <InputNumber class="form-control" @bind-Value="pet.ClientId" />
+                    <ValidationMessage For="@(() => pet.ClientId)" />
                 </div>
 
                 <div class="form-buttons">
