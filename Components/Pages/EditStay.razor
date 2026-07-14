@@ -43,10 +43,19 @@
                 <ValidationSummary />
 
                 <div class="mb-3">
-                    <label class="form-label">Pet ID</label>
-                    <InputNumber class="form-control" @bind-Value="stay.PetId" />
-                    <ValidationMessage For="@(() => stay.PetId)" />
-                </div>
+    <label class="form-label">Pet</label>
+
+    <InputSelect class="form-select" @bind-Value="stay.PetId">
+        <option value="0">-- Select a pet --</option>
+
+        @foreach (var pet in pets)
+        {
+            <option value="@pet.PetId">@pet.Name</option>
+        }
+    </InputSelect>
+
+    <ValidationMessage For="@(() => stay.PetId)" />
+</div>
 
                 <div class="mb-3">
                     <label class="form-label">Start Date</label>
@@ -91,12 +100,18 @@
     [Parameter]
     public int Id { get; set; }
 
+    private List<Pet> pets = new();
+
     private Stay? stay;
 
     private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        pets = await Db.Pets
+    .OrderBy(p => p.Name)
+    .ToListAsync();
+
         if (Id == 0)
         {
             stay = new Stay
