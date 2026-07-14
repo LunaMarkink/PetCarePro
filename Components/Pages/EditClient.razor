@@ -42,24 +42,28 @@
                     <label class="form-label">Name</label>
                     <InputText class="form-control"
                                @bind-Value="client.Name" />
+                    <ValidationMessage For="@(() => client.Name)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Address</label>
                     <InputText class="form-control"
                                @bind-Value="client.Address" />
+                    <ValidationMessage For="@(() => client.Address)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
                     <InputText class="form-control"
                                @bind-Value="client.PhoneNumber" />
+                    <ValidationMessage For="@(() => client.PhoneNumber)" />
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Email Address</label>
                     <InputText class="form-control"
                                @bind-Value="client.Email" />
+                    <ValidationMessage For="@(() => client.Email)" />
                 </div>
 
                 <div class="form-buttons">
