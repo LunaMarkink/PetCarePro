@@ -1,5 +1,6 @@
 @page "/pets"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
 
 
@@ -15,14 +16,21 @@
         <h1>Pets</h1>
         <p>Manage all registered pets.</p>
     </div>
-
     <a href="/pets/new" class="btn btn-success">
         New Pet
     </a>
 </div>
 
+<div class="mb-4">
+    <input type="text"
+           class="form-control"
+           placeholder="Search by name, species or breed..."
+           @bind="searchTerm"
+           @bind:event="oninput" />
+</div>
+
 <div class="row g-4">
-    @foreach (var pet in pets)
+    @foreach (var pet in filteredPets)
     {
         <div class="col-lg-4 col-md-6">
             <div class="entity-card">
@@ -43,7 +51,7 @@
                     <p><strong>Gender:</strong> @pet.Gender</p>
                     <p><strong>Date of Birth:</strong> @pet.DateOfBirth.ToString("dd-MM-yyyy")</p>
                     <p><strong>Chip Number:</strong> @pet.ChipNumber</p>
-                    <p><strong>Client ID:</strong> @pet.ClientId</p>
+                    <p><strong>Owner:</strong> @pet.Client?.Name</p>
                 </div>
 
                 <div class="entity-actions">
@@ -64,11 +72,22 @@
 
 @code {
     private List<Pet> pets = new();
+    private string searchTerm = string.Empty;
+private IEnumerable<Pet> filteredPets =>
+    string.IsNullOrWhiteSpace(searchTerm)
+        ? pets
+        : pets.Where(p =>
+            p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            p.Species.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            p.Breed.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
     protected override void OnInitialized()
-    {
-        pets = Db.Pets.ToList();
-    }
+{
+    pets = Db.Pets
+        .Include(p => p.Client)
+        .OrderBy(p => p.Name)
+        .ToList();
+}
 
     private async Task Delete(Pet pet)
     {
