@@ -43,24 +43,28 @@
                     <label class="form-label">Pet ID</label>
                     <InputNumber class="form-control"
                                  @bind-Value="careSchedule.PetId" />
+                    <ValidationMessage For="@(() => careSchedule.PetId)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Feeding</label>
                     <InputText class="form-control"
                                @bind-Value="careSchedule.Feeding" />
+                    <ValidationMessage For="@(() => careSchedule.Feeding)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Medication</label>
                     <InputText class="form-control"
                                @bind-Value="careSchedule.Medication" />
+                    <ValidationMessage For="@(() => careSchedule.Medication)" />
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Notes</label>
                     <InputText class="form-control"
                                @bind-Value="careSchedule.Notes" />
+                    <ValidationMessage For="@(() => careSchedule.Notes)" />
                 </div>
 
                 <div class="form-buttons">
