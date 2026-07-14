@@ -45,16 +45,19 @@
                 <div class="mb-3">
                     <label class="form-label">Pet ID</label>
                     <InputNumber class="form-control" @bind-Value="stay.PetId" />
+                    <ValidationMessage For="@(() => stay.PetId)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Start Date</label>
                     <InputDate class="form-control" @bind-Value="stay.StartDate" />
+                    <ValidationMessage For="@(() => stay.StartDate)" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">End Date</label>
                     <InputDate class="form-control" @bind-Value="stay.EndDate" />
+                    <ValidationMessage For="@(() => stay.EndDate)" />
                 </div>
 
                 <div class="mb-3">
