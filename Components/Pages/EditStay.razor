@@ -3,7 +3,7 @@
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
-
+@using Microsoft.EntityFrameworkCore
 @using PetCarePro.Classes
 @using PetCarePro.Data
 
@@ -25,6 +25,12 @@
                 ? "Add a new stay to the PetCarePro system."
                 : "Update the stay information.")
         </p>
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
 
         @if (stay is null)
         {
@@ -84,6 +90,8 @@
 
     private Stay? stay;
 
+    private string? errorMessage;
+
     protected override async Task OnInitializedAsync()
     {
         if (Id == 0)
@@ -103,13 +111,48 @@
     }
 
     private async Task SaveStay()
+{
+    errorMessage = null;
+
+    if (stay is null)
+    {
+        errorMessage = "The stay could not be loaded.";
+        return;
+    }
+
+    if (stay.EndDate < stay.StartDate)
+    {
+        errorMessage = "The end date cannot be before the start date.";
+        return;
+    }
+
+    var overlappingStayExists = await Db.Stays.AnyAsync(existingStay =>
+        existingStay.StayId != stay.StayId &&
+        existingStay.PetId == stay.PetId &&
+        stay.StartDate <= existingStay.EndDate &&
+        stay.EndDate >= existingStay.StartDate);
+
+    if (overlappingStayExists)
+    {
+        errorMessage =
+            "This pet already has a stay that overlaps with the selected period.";
+        return;
+    }
+
+    try
     {
         if (Id == 0)
         {
-            Db.Stays.Add(stay!);
+            Db.Stays.Add(stay);
         }
 
         await Db.SaveChangesAsync();
         Navigation.NavigateTo("/stays");
     }
+    catch (Exception)
+    {
+        errorMessage =
+            "Something went wrong while saving the stay. Please try again.";
+    }
+}
 }
