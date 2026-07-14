@@ -1,20 +1,25 @@
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetCarePro.Classes
 {
-    // Stay
     public class Stay
     {
         public int StayId { get; set; }
 
-        // Relationship with pet
+        [Range(1, int.MaxValue, ErrorMessage = "Selecteer een huisdier.")]
         public int PetId { get; set; }
-        public Pet Pet { get; set; }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public Pet Pet { get; set; } = null!;
 
-        public string KennelNumber { get; set; }
+        [Required(ErrorMessage = "Check-in datum is verplicht.")]
+        public DateTime StartDate { get; set; } = DateTime.Today;
+
+        [Required(ErrorMessage = "Check-out datum is verplicht.")]
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
+
+        [StringLength(50)]
+        public string KennelNumber { get; set; } = string.Empty;
+
         public string Status { get; set; }
     }
-}
+    }
