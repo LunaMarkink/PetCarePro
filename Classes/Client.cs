@@ -6,20 +6,20 @@ namespace PetCarePro.Classes
     {
         public int ClientId { get; set; }
 
-        [Required(ErrorMessage = "Naam is verplicht.")]
-        [StringLength(100, ErrorMessage = "De naam mag maximaal 100 tekens bevatten.")]
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(30, ErrorMessage = "The name can be at most 30 characters long.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Adres is verplicht.")]
-        [StringLength(200, ErrorMessage = "Het adres mag maximaal 200 tekens bevatten.")]
+        [Required(ErrorMessage = "Address is required.")]
+        [StringLength(50, ErrorMessage = "The address can be at most 50 characters long.")]
         public string Address { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Telefoonnummer is verplicht.")]
-        [Phone(ErrorMessage = "Vul een geldig telefoonnummer in.")]
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Phone(ErrorMessage = "Please enter a valid phone number.")]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "E-mailadres is verplicht.")]
-        [EmailAddress(ErrorMessage = "Vul een geldig e-mailadres in.")]
+        [Required(ErrorMessage = "Email address is required.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; } = string.Empty;
 
         public List<Pet> Pets { get; set; } = new();
