@@ -2,6 +2,7 @@
 @page "/careschedules/new"
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
 
 @using PetCarePro.Classes
@@ -40,11 +41,21 @@
                 <ValidationSummary />
 
                 <div class="mb-3">
-                    <label class="form-label">Pet ID</label>
-                    <InputNumber class="form-control"
-                                 @bind-Value="careSchedule.PetId" />
-                    <ValidationMessage For="@(() => careSchedule.PetId)" />
-                </div>
+                    <label class="form-label">Pet</label>
+
+    <InputSelect class="form-select"
+                 @bind-Value="careSchedule.PetId">
+
+        <option value="0">-- Select a pet --</option>
+
+        @foreach (var pet in pets)
+        {
+            <option value="@pet.PetId">@pet.Name</option>
+        }
+    </InputSelect>
+
+    <ValidationMessage For="@(() => careSchedule.PetId)" />
+</div>
 
                 <div class="mb-3">
                     <label class="form-label">Feeding</label>
@@ -99,9 +110,14 @@
     public int Id { get; set; }
 
     private CareSchedule? careSchedule;
+    private List<Pet> pets = new();
 
     protected override async Task OnInitializedAsync()
     {
+        pets = await Db.Pets
+            .OrderBy(p => p.Name)
+            .ToListAsync();
+
         careSchedule = Id == 0
             ? new CareSchedule
             {
