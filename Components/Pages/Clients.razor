@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
+@inject IJSRuntime JS
+@using Microsoft.JSInterop
 
 @using PetCarePro.Classes
 @using PetCarePro.Data
@@ -79,9 +81,9 @@ else
                         </a>
 
                         <button class="btn btn-outline-danger btn-sm"
-                                @onclick="() => Delete(client)">
-                            Delete
-                        </button>
+        @onclick="() => ConfirmDelete(client)">
+    Delete
+</button>
                     </div>
                 </div>
             </div>
@@ -92,6 +94,18 @@ else
 @code {
     private List<Client> clients = new();
     private string searchTerm = string.Empty;
+
+private async Task ConfirmDelete(Client client)
+{
+    var confirmed = await JS.InvokeAsync<bool>(
+        "confirm",
+        $"Are you sure you want to delete {client.Name}?");
+
+    if (confirmed)
+    {
+        await Delete(client);
+    }
+}
 
     private IEnumerable<Client> filteredClients =>
     string.IsNullOrWhiteSpace(searchTerm)
